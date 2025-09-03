@@ -1,4 +1,7 @@
 from azure.monitor.opentelemetry import configure_azure_monitor
+configure_azure_monitor()
+
+from flask import Flask, render_template, request
 import logging
 from datetime import datetime, timezone
 from werkzeug.utils import redirect
@@ -9,18 +12,16 @@ from products import create_product_download
 import requests
 
 logging.basicConfig(level=logging.INFO)
-configure_azure_monitor()
 
-from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config.from_object(Config)
 
 initialise_database(app)
 initialise_scheduled_jobs(app)
 
-
 @app.route("/")
 def index():
+    app.logger.info('Processing index route')
     orders = get_orders_to_display()
     queue_count = get_queued_count()
     recently_placed_count = get_recently_placed_count()
