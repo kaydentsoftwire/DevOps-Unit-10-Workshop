@@ -34,10 +34,13 @@ def process_orders(app):
             "date": order.date_placed.astimezone(pytz.UTC).isoformat(),
         }
 
-        response = requests.post(
-            app.config["FINANCE_PACKAGE_URL"] + "/ProcessPayment",
-            json=payload
-        )
+        try:
+            response = requests.post(
+                app.config["FINANCE_PACKAGE_URL"] + "/ProcessPayment",
+                son=payload
+            )   
+        except:
+            app.logger.exception("Error processing order {id}".format(id = order.id))
 
         app.logger.info("Response from endpoint: " + response.text)
 
