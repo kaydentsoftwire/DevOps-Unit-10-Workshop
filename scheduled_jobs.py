@@ -23,6 +23,10 @@ def process_orders(app):
 
         order = orders[0]
 
+        app.logger.info(order)
+        app.logger.info(order.date_placed)
+        app.logger.info(order.date_placed.isoformat())
+
         payload = {
             "product": order.product,
             "customer": order.customer,
@@ -33,7 +37,7 @@ def process_orders(app):
             app.config["FINANCE_PACKAGE_URL"] + "/ProcessPayment",
             json=payload
         )
-        
+
         app.logger.info("Response from endpoint: " + response.text)
 
         response.raise_for_status()
