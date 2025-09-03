@@ -1,7 +1,6 @@
 from azure.monitor.opentelemetry import configure_azure_monitor
 configure_azure_monitor()
 
-from flask import Flask, render_template, request
 from datetime import datetime, timezone
 
 from werkzeug.utils import redirect
@@ -14,6 +13,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config.from_object(Config)
 
