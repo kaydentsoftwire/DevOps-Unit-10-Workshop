@@ -1,3 +1,6 @@
+from azure.monitor.opentelemetry import configure_azure_monitor
+configure_azure_monitor()
+
 from flask import Flask, render_template, request
 from datetime import datetime, timezone
 
