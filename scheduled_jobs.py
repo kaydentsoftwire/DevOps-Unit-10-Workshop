@@ -1,6 +1,7 @@
 from data.database import save_order, get_all_orders
 from products import create_product_download
 from apscheduler.schedulers.background import BackgroundScheduler
+import pytz
 import requests
 
 
@@ -25,12 +26,12 @@ def process_orders(app):
 
         app.logger.info(order)
         app.logger.info(order.date_placed)
-        app.logger.info(order.date_placed.isoformat())
+        app.logger.info(order.date_placed.astimezone(pytz.UTC).isoformat())
 
         payload = {
             "product": order.product,
             "customer": order.customer,
-            "date": order.date_placed.isoformat(),
+            "date": order.date_placed.astimezone(pytz.UTC).isoformat(),
         }
 
         response = requests.post(
